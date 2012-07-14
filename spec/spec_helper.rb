@@ -1,0 +1,5 @@
+require 'rubygems'
+require 'bundler'
+require 'rspec'
+require 'delayed-method'
+require 'debugger'
