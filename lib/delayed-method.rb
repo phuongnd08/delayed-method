@@ -16,11 +16,29 @@ class DelayedMethod
     end
 
     def enqueue(object, method, *args)
+      ensure_proper_call(object, method) do |klass, id|
+        Resque.enqueue(DelayedMethod, klass, id, method, *args)
+      end
+    end
+
+    def enqueue_at(time, object, method, *args)
+      ensure_proper_call(object, method) do |klass, id|
+        if Resque.respond_to?(:enqueue_at)
+          Resque.enqueue_at(time, DelayedMethod, klass, id, method, *args)
+        else
+          raise "resque-scheduler need to be included for this to work"
+        end
+      end
+    end
+
+    private
+    def ensure_proper_call(object, method)
       raise ArgumentError.new("object does not respond to #{method}") unless object.respond_to?(method)
       if object.is_a? Class
-        Resque.enqueue(DelayedMethod, object.name, nil, method, *args)
+        yield object.name, nil
       elsif object.is_a? ActiveRecord::Base
-        Resque.enqueue(DelayedMethod, object.class.name, object.id, method, *args)
+        raise ArgumentError.new("object need to be persisted") unless object.persisted?
+        yield object.class.name, object.id
       else
         raise ArgumentError.new("Only class and ActiveRecord resource are supported")
       end
