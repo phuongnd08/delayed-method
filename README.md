@@ -36,9 +36,16 @@ model.long_call(arg1, arg2)
 
 DelayedMethod.enqueue(model, :long_call, arg1, arg2)
 
+That's it. This is the only 2 cases that DelayedMethod will work: Caller
+need to be either a class or a persisted ActiveRecord model
 
-That's it. This is the only 2 cases that DelayedMethod will work.
+If you use resque-scheduler, you can also do this:
 
+  DelayedMethod.enqueue_at(1.day.from_now, Executor, :long_call, arg1, arg2)
+
+or
+
+  DelayedMethod.enqueue_at(1.day.from_now, model, :long_call, arg1, arg2)
 
 Warning
 ===========
