@@ -37,7 +37,7 @@ class DelayedMethod
       if object.is_a? Class
         yield object.name, nil
       elsif object.is_a? ActiveRecord::Base
-        raise ArgumentError.new("object need to be persisted") unless object.persisted?
+        raise ArgumentError.new("object #{object.class}:#{object.id}##{method} needs to be persisted #{caller}") unless object.persisted?
         yield object.class.name, object.id
       else
         raise ArgumentError.new("Only class and ActiveRecord resource are supported")
