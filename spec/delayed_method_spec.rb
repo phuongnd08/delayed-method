@@ -32,6 +32,7 @@ describe DelayedMethod do
           armodel.should_receive(:is_a?).with(Class).and_return(false)
           armodel.should_receive(:is_a?).with(ActiveRecord::Base).and_return(true)
           armodel.should_receive(:class).and_return ActiveRecord::Base
+          armodel.stub(:persisted?).and_return true
           ActiveRecord::Base.stub(:find).with(1).and_return armodel
         end
       end
@@ -42,6 +43,17 @@ describe DelayedMethod do
           DelayedMethod.enqueue(armodel, :execute, "sample", "another_sample")
           klass, args = Resque.reserve(:delayed)
           klass.perform(*args)
+        end
+
+        context "object is not persisted" do
+          it "raises exception with identifying info" do
+            armodel = mock_armodel
+            armodel.stub(:some_method)
+            armodel.stub(:persisted?).and_return(false)
+            expect {
+              DelayedMethod.enqueue(armodel, :some_method)
+            }.to raise_error(anything, /Base.*some_method/)
+          end
         end
       end
     end
