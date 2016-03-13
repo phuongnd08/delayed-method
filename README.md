@@ -54,9 +54,6 @@ Please notice that Class method call and ActiveRecord instance call are the only
 Even in that case, only simple arguments (string, number) are supported.
 Using object, structure, or symbol as argument will yield unexpected result. (Symbol will be converted to String).
 
-delayed-method is only that simple and will always be that simple.
-I don't want to promise a bundle of complex serialization or shit that will eventually turn into something sophisticated, easily fall apart when either resque or rails updated.
-
 Author
 =====
 
