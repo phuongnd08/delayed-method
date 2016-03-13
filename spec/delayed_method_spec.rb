@@ -52,7 +52,7 @@ describe DelayedMethod do
             armodel.stub(:persisted?).and_return(false)
             expect {
               DelayedMethod.enqueue(armodel, :some_method)
-            }.to raise_error(anything, /Base.*some_method/)
+            }.to raise_error(ArgumentError, /Base.*some_method/)
           end
         end
       end

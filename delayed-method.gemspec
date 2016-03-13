@@ -15,8 +15,9 @@ Gem::Specification.new do |s|
 
   s.add_dependency    "resque"
   s.add_dependency    "activesupport"
+  s.add_development_dependency "redis_test"
   s.add_development_dependency "rspec", "~> 2.0"
-  s.add_development_dependency "debugger"
+  s.add_development_dependency "byebug"
   s.add_development_dependency "activerecord"
 
   s.description = "Allow you to quickly move a long call to background which then executed by resque"

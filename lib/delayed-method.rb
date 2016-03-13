@@ -8,6 +8,7 @@ class DelayedMethod
     include ActiveSupport::Inflector
 
     def perform(klass_name, instance_id, method, *args)
+      puts "<#{klass_name}##{instance_id}>##{method}#{args}"
       if instance_id
         constantize(klass_name).find(instance_id).send(method, *args)
       else
