@@ -14,7 +14,6 @@ Gem::Specification.new do |s|
   s.files            += Dir.glob("spec/**/*")
 
   s.add_dependency    "resque"
-  s.add_dependency    "activesupport"
   s.add_development_dependency "redis_test"
   s.add_development_dependency "rspec", "~> 2.0"
   s.add_development_dependency "byebug"

@@ -5,14 +5,12 @@ class DelayedMethod
   @queue = :delayed
 
   class << self
-    include ActiveSupport::Inflector
-
     def perform(klass_name, instance_id, method, *args)
       puts "<#{klass_name}##{instance_id}>##{method}#{args}"
       if instance_id
-        constantize(klass_name).find(instance_id).send(method, *args)
+        Object.const_get(klass_name).find(instance_id).send(method, *args)
       else
-        constantize(klass_name).send(method, *args)
+        Object.const_get(klass_name).send(method, *args)
       end
     end
 
