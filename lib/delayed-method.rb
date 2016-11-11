@@ -22,6 +22,13 @@ class DelayedMethod
       end
     end
 
+    def enqueue_to(queue, object, method, *args)
+      ensure_proper_call(object, method) do |klass, id|
+        Resque.enqueue_to(queue, DelayedMethod, klass, id, method, *args)
+      end
+    end
+
+
     def enqueue_at(time, object, method, *args)
       ensure_proper_call(object, method) do |klass, id|
         if Resque.respond_to?(:enqueue_at)
