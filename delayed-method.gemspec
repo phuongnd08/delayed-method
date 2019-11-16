@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name              = "delayed-method"
-  s.version           = "0.2.4"
+  s.version           = "0.3.0"
   s.date              = Time.now.strftime('%Y-%m-%d')
   s.summary           = "Allow you to quickly move a long call to background which then executed by resque"
   s.homepage          = "http://github.com/phuongnd08/delayed-method"

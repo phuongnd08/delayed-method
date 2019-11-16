@@ -57,7 +57,7 @@ ActiveRecord reading from master instead of slave, you can do this:
    class MyCustomDelayedMethod < DelayedMethod
      @queue = :delayed
 
-     def perform(klass_name, instance_id, method, *args)
+     def perform(*args)
        wrap_method do
          super
        end
