@@ -16,13 +16,13 @@ class DelayedMethod
 
     def enqueue(object, method, *args)
       ensure_proper_call(object, method) do |klass, id|
-        Resque.enqueue(DelayedMethod, klass, id, method, *args)
+        Resque.enqueue(self, klass, id, method, *args)
       end
     end
 
     def enqueue_to(queue, object, method, *args)
       ensure_proper_call(object, method) do |klass, id|
-        Resque.enqueue_to(queue, DelayedMethod, klass, id, method, *args)
+        Resque.enqueue_to(queue, self, klass, id, method, *args)
       end
     end
 
@@ -30,7 +30,7 @@ class DelayedMethod
     def enqueue_at(time, object, method, *args)
       ensure_proper_call(object, method) do |klass, id|
         if Resque.respond_to?(:enqueue_at)
-          Resque.enqueue_at(time, DelayedMethod, klass, id, method, *args)
+          Resque.enqueue_at(time, self, klass, id, method, *args)
         else
           raise "resque-scheduler need to be included for this to work"
         end
