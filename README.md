@@ -47,6 +47,27 @@ or
 
     DelayedMethod.enqueue_at(1.day.from_now, model, :long_call, arg1, arg2)
 
+Customize your worker
+=====================
+
+If you want to customize DelayedMethod to enforce things like having
+ActiveRecord reading from master instead of slave, you can do this:
+
+```
+   class MyCustomDelayedMethod < DelayedMethod
+     @queue = :delayed
+
+     def perform(klass_name, instance_id, method, *args)
+       wrap_method do
+         super
+       end
+     end
+   end
+
+   MyCustomDelayedMethod.enqueue(object, :method)
+```
+
+
 Warning
 ===========
 
