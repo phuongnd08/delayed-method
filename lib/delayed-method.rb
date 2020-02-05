@@ -5,8 +5,10 @@ class DelayedMethod
   @queue = :delayed
 
   class << self
+    attr_accessor :debugging
+
     def perform(klass_name, instance_id, method, *args)
-      puts "<#{klass_name}##{instance_id}>##{method}#{args}"
+      puts "<#{klass_name}##{instance_id}>##{method}#{args}" if debugging
       if instance_id
         Object.const_get(klass_name).find(instance_id).send(method, *args)
       else

@@ -2,6 +2,14 @@ require File.dirname(__FILE__) + '/spec_helper'
 require 'active_record'
 
 describe DelayedMethod do
+  describe "debugging get/set" do
+    it "works" do
+      DelayedMethod.debugging = true
+      expect(DelayedMethod.debugging).to eq true
+      DelayedMethod.debugging = nil
+    end
+  end
+
   describe "enqueue and perform" do
     context "object does not respond method" do
       it "raises exception" do
