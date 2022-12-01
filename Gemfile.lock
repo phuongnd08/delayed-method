@@ -57,7 +57,7 @@ GEM
       rack-protection (= 3.0.4)
       tilt (~> 2.0)
     tilt (2.0.11)
-    tzinfo (0.3.56)
+    tzinfo (0.3.61)
     vegas (0.1.11)
       rack (>= 1.0.0)
 
